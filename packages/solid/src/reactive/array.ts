@@ -14,7 +14,7 @@ function dispose(d: (() => void)[]) {
  * @description https://www.solidjs.com/docs/latest/api#maparray
  */
 export function mapArray<T, U>(
-  list: Accessor<readonly T[] | undefined | null | false>,
+  list: Accessor<ArrayLike<T> | undefined | null | false>,
   mapFn: (v: T, i: Accessor<number>) => U,
   options: { fallback?: Accessor<any> } = {}
 ): () => U[] {
@@ -127,7 +127,7 @@ export function mapArray<T, U>(
         // 3) in case the new set is shorter than the old, set the length of the mapped array
         mapped = mapped.slice(0, (len = newLen));
         // 4) save a copy of the mapped items for the next update
-        items = newItems.slice(0);
+        items = Array.from(newItems)
       }
       return mapped;
     });
@@ -151,7 +151,7 @@ export function mapArray<T, U>(
  * @description https://www.solidjs.com/docs/latest/api#indexarray
  */
 export function indexArray<T, U>(
-  list: Accessor<readonly T[] | undefined | null | false>,
+  list: Accessor<ArrayLike<T> | undefined | null | false>,
   mapFn: (v: Accessor<T>, i: number) => U,
   options: { fallback?: Accessor<any> } = {}
 ): () => U[] {
@@ -205,8 +205,8 @@ export function indexArray<T, U>(
         disposers[i]();
       }
       len = signals.length = disposers.length = newItems.length;
-      items = newItems.slice(0);
-      return (mapped = mapped.slice(0, len));
+      items = Array.from(newItems)
+    return (mapped = mapped.slice(0, len));
     });
     function mapper(disposer: () => void) {
       disposers[i] = disposer;

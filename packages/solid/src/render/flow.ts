@@ -26,7 +26,7 @@ import type { JSX } from "../jsx.js";
  * @description https://www.solidjs.com/docs/latest/api#%3Cfor%3E
  */
 export function For<T, U extends JSX.Element>(props: {
-  each: readonly T[] | undefined | null | false;
+  each: ArrayLike<T> | undefined | null | false;
   fallback?: JSX.Element;
   children: (item: T, index: Accessor<number>) => U;
 }) {
@@ -50,7 +50,7 @@ export function For<T, U extends JSX.Element>(props: {
  * @description https://www.solidjs.com/docs/latest/api#%3Cindex%3E
  */
 export function Index<T, U extends JSX.Element>(props: {
-  each: readonly T[] | undefined | null | false;
+  each: ArrayLike<T> | undefined | null | false;
   fallback?: JSX.Element;
   children: (item: Accessor<T>, index: number) => U;
 }) {
